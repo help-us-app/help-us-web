@@ -5,6 +5,7 @@ import 'package:help_us_web/widgets/custom_scroll_body.dart';
 
 import '../../objects/campaign.dart';
 import '../../objects/location.dart';
+import '../../widgets/campaign_card.dart';
 import '../../widgets/help_us_logo.dart';
 
 class Dashboard extends StatefulWidget {
@@ -53,40 +54,83 @@ class _DashboardState extends State<Dashboard> {
           ),
           sliver: SliverList(
               delegate: SliverChildListDelegate.fixed([
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(widget.location.businessName,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline5.copyWith(
-                            fontSize: 30, fontWeight: FontWeight.bold)),
-                    Text(widget.location.address.addressLine1,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.caption.copyWith(
-                            fontSize: 20, fontWeight: FontWeight.w200)),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(FontAwesome.instagram, size: 30),
-                          SizedBox(width: 10),
-                          Icon(FontAwesome.twitter, size: 30),
-                          SizedBox(width: 10),
-                          Icon(FontAwesome.facebook, size: 30),
-                        ],
-                      ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(widget.location.businessName,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline5
+                          .copyWith(fontSize: 30, fontWeight: FontWeight.bold)),
+                  Text(widget.location.address.addressLine1,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .caption
+                          .copyWith(fontSize: 20, fontWeight: FontWeight.w200)),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(FontAwesome.instagram, size: 30),
+                        SizedBox(width: 10),
+                        Icon(FontAwesome.twitter, size: 30),
+                        SizedBox(width: 10),
+                        Icon(FontAwesome.facebook, size: 30),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ])),
-        )
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+          sliver: SliverToBoxAdapter(
+            child: Row(
+              children: [
+                Text(
+                  "Campaigns",
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6
+                      .copyWith(fontSize: 25, fontWeight: FontWeight.bold),
+                ),
+                const Spacer(),
+                Text("SEE ALL",
+                    style: Theme.of(context).textTheme.caption.copyWith(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 2)),
+              ],
+            ),
+          ),
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          sliver: SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return CampaignCard(
+                  id: widget.campaigns[index].id.toString(),
+                  title: widget.campaigns[index].name,
+                  image: widget.campaigns[index].image,
+                  description: widget.campaigns[index].description,
+                  onTap: () {},
+                  isCompleted: widget.campaigns[index].isCompleted,
+                );
+              },
+              childCount:
+                  widget.campaigns.length > 3 ? 3 : widget.campaigns.length,
+            ),
+          ),
+        ),
       ],
     ));
   }
