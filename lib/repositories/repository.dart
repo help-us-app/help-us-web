@@ -85,9 +85,8 @@ class Repository {
   static getLocationById(String locationId, String userId) async {
     try {
       Response response = await dio.get(
-        "${herokuUrl}location/$locationId?user_id=$userId",
-        options: Options(headers: {"Authorization": "Bearer $herokuToken"}),
-      );
+        "${herokuUrl}location/$locationId?user_id=$userId")
+      ;
       log("getLocationById");
       return Location.fromJson(response.data['location']);
     } catch (e) {
