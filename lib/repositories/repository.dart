@@ -67,6 +67,7 @@ class Repository {
       List<Item> items = [];
       for (var item in response.data["data"]) {
         items.add(Item(
+          id: item["id"].toString(),
           title: item["title"],
           productLink: item["link"],
           productImage: item["thumbnail"],
@@ -84,11 +85,30 @@ class Repository {
 
   static getLocationById(String locationId, String userId) async {
     try {
-      Response response = await dio.get(
-        "${herokuUrl}location/$locationId?user_id=$userId")
-      ;
+      Response response =
+          await dio.get("${herokuUrl}location/$locationId?user_id=$userId");
       log("getLocationById");
       return Location.fromJson(response.data['location']);
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
+  static createPayment(String userId, String locationId, String buyerEmail,
+      List<Item> lineItems) async {
+    try {
+      Response response = await dio.post(
+        "${herokuUrl}payment",
+        data: {
+          "user_id": userId,
+          "location_id": locationId,
+          "buyer_email": buyerEmail,
+          "line_items": lineItems.map((item) => item.toJson()).toList(),
+        },
+      );
+      log("createPayment");
+      return response.data['payment_link']['url'];
     } catch (e) {
       log(e.toString());
       return null;

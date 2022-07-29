@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import 'package:flutter/material.dart';
 import 'package:help_us_web/pages/items/items_bloc.dart';
@@ -9,7 +9,15 @@ import '../../widgets/row.dart';
 class Items extends StatefulWidget {
   final String campaignId;
   final String campaignName;
-  const Items({Key key, this.campaignId, this.campaignName}) : super(key: key);
+  final String locationId;
+  final String userId;
+  const Items(
+      {Key key,
+      this.campaignId,
+      this.campaignName,
+      this.locationId,
+      this.userId})
+      : super(key: key);
 
   @override
   State<Items> createState() => _ItemsState();
@@ -49,17 +57,30 @@ class _ItemsState extends State<Items> {
                             sliver: SliverList(
                               delegate: SliverChildBuilderDelegate(
                                 (context, index) {
-                                  log(state.data.items[index]
-                                      .toJson()
-                                      .toString());
+                                  bool isSelected = state.data.selectedItems
+                                      .contains(state.data.items[index]);
                                   return ItemRow(
-                                      title: state.data.items[index].title,
-                                      price: state.data.items[index].price,
-                                      image:
-                                          state.data.items[index].productImage,
-                                      isPurchased:
-                                          state.data.items[index].purchased,
-                                      onTap: () {});
+                                    title: state.data.items[index].title,
+                                    price: state.data.items[index].price,
+                                    image: state.data.items[index].productImage,
+                                    isPurchased:
+                                        state.data.items[index].purchased,
+                                    onTap: () async {
+                                      if (state.data.items[index].purchased) {
+                                        return;
+                                      }
+                                      if (isSelected) {
+                                        await bloc.removeFromSelectedItems(
+                                            state.data.items[index]);
+                                      } else {
+                                        await bloc.addToSelectedItems(
+                                            state.data.items[index]);
+                                      }
+                                      _showSnackBar(
+                                          state.data.selectedItems.length);
+                                    },
+                                    selected: isSelected,
+                                  );
                                 },
                                 childCount: state.data.items.length,
                               ),
@@ -73,5 +94,44 @@ class _ItemsState extends State<Items> {
                         ]
                       : []);
             }));
+  }
+
+  void _showSnackBar(int num) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    if (num != 0) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          "Number of items selected: $num",
+        ),
+        action: SnackBarAction(
+          label: 'Confirm Items',
+          onPressed: () async {
+            String url = await bloc.purchaseItems(widget.userId,
+                widget.locationId, "carlduncanja@gmail.com", "Test Note");
+            _showUrlSnackBar(url);
+          },
+        ),
+        duration: const Duration(days: 365),
+        dismissDirection: DismissDirection.none,
+      ));
+    }
+  }
+
+  void _showUrlSnackBar(String url) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: const Text(
+        "Items successfully confirmed.",
+      ),
+      action: SnackBarAction(
+        label: 'Complete Purchase',
+        onPressed: () {
+          launchUrlString(url);
+          Navigator.pop(context);
+        },
+      ),
+      duration: const Duration(days: 365),
+      dismissDirection: DismissDirection.none,
+    ));
   }
 }

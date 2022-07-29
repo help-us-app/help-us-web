@@ -8,6 +8,7 @@ class ItemRow extends StatelessWidget {
   final String title, price, image;
   final VoidCallback onTap;
   final bool isPurchased;
+  final bool selected;
   final String hero;
 
   const ItemRow(
@@ -17,7 +18,8 @@ class ItemRow extends StatelessWidget {
       this.title,
       this.price,
       this.image,
-      this.isPurchased})
+      this.isPurchased,
+      this.selected})
       : super(key: key);
 
   @override
@@ -37,10 +39,9 @@ class ItemRow extends StatelessWidget {
                 15.0,
               ),
               side: BorderSide(
-                  color: Theme.of(context).brightness == Brightness.dark
-                      ? Colors.grey[800]
-                      : Colors.grey[200],
-                  width: 0.2)),
+                  color:
+                      selected == false ? Colors.grey[800] : AppColors.primary,
+                  width: selected == false ? 0.2 : 0.4)),
           elevation: 0,
           shadowColor: Colors.grey,
           child: Padding(

@@ -129,6 +129,8 @@ class _DashboardState extends State<Dashboard> {
                       Navigator.of(context).push(createRoute(Items(
                         campaignId: widget.campaigns[index].id.toString(),
                         campaignName: widget.campaigns[index].name,
+                        locationId: widget.user.locationId,
+                        userId: widget.user.id,
                       )));
                     }
                   },

@@ -6,6 +6,7 @@ String itemToJson(Item data) => json.encode(data.toJson());
 
 class Item {
   Item({
+    this.id,
     this.title,
     this.price,
     this.quantity,
@@ -13,7 +14,7 @@ class Item {
     this.productImage,
     this.purchased,
   });
-
+  String id;
   String title;
   String price;
   String quantity;
@@ -22,6 +23,7 @@ class Item {
   bool purchased;
 
   factory Item.fromJson(Map<String, dynamic> json) => Item(
+        id: json["id"],
         title: json["title"],
         price: json["price"],
         quantity: json["quantity"],
@@ -31,6 +33,7 @@ class Item {
       );
 
   Map<String, dynamic> toJson() => {
+        "id": id,
         "title": title,
         "price": price,
         "quantity": quantity,
