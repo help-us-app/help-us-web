@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:help_us_web/objects/user.dart';
+import 'package:help_us_web/pages/items/items.dart';
 import 'package:help_us_web/widgets/custom_scroll_body.dart';
 
 import '../../objects/campaign.dart';
 import '../../objects/location.dart';
+import '../../utils/transition.dart';
 import '../../widgets/campaign_card.dart';
 import '../../widgets/help_us_logo.dart';
 
@@ -122,7 +124,14 @@ class _DashboardState extends State<Dashboard> {
                   title: widget.campaigns[index].name,
                   image: widget.campaigns[index].image,
                   description: widget.campaigns[index].description,
-                  onTap: () {},
+                  onTap: () {
+                    if (mounted) {
+                      Navigator.of(context).push(createRoute(Items(
+                        campaignId: widget.campaigns[index].id.toString(),
+                        campaignName: widget.campaigns[index].name,
+                      )));
+                    }
+                  },
                   isCompleted: widget.campaigns[index].isCompleted,
                 );
               },
