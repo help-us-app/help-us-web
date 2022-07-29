@@ -36,7 +36,7 @@ class HelpUsLogo extends StatelessWidget {
           ),
         if (hasForChrome != null)
           TextSpan(
-            text: 'Chrome',
+            text: 'Web',
             style: Theme.of(context).textTheme.bodyText1.copyWith(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,

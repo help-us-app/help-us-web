@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:help_us_web/pages/dashboard/dashboard.dart';
 import 'package:help_us_web/pages/wrapper/wrapper_bloc.dart';
 
 import '../loading_page.dart';
 
 class Wrapper extends StatefulWidget {
   final String locationId;
+  final String userId;
 
-  const Wrapper({Key key, this.locationId}) : super(key: key);
+  const Wrapper({Key key, this.locationId, this.userId}) : super(key: key);
 
   @override
   WrapperState createState() => WrapperState();
@@ -17,7 +19,7 @@ class WrapperState extends State<Wrapper> {
 
   @override
   void initState() {
-    wrapperBloc = WrapperBloc(widget.locationId);
+    wrapperBloc = WrapperBloc(widget.locationId, widget.userId);
     super.initState();
   }
 
@@ -30,13 +32,16 @@ class WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: wrapperBloc.location,
+        stream: wrapperBloc.stream,
         builder: (context, snapshot) {
           Widget child = const LoadingPage();
 
           if (snapshot.hasData) {
-            child = Container(
-              color: Colors.green,
+            WrapperObjectState state = snapshot.data;
+            child = Dashboard(
+              location: state.location,
+              user: state.user,
+              campaigns: state.campaigns,
             );
           }
 
