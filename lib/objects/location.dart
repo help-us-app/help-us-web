@@ -12,6 +12,10 @@ class Location {
   String name;
   String posBackgroundUrl;
   String status;
+  String twitterUsername;
+  String instagramUsername;
+  String facebookUrl;
+  String phoneNumber;
 
   Location(
       {this.address,
@@ -26,7 +30,11 @@ class Location {
       this.merchantId,
       this.name,
       this.posBackgroundUrl,
-      this.status});
+      this.status,
+      this.twitterUsername,
+      this.instagramUsername,
+      this.facebookUrl,
+      this.phoneNumber});
 
   Location.fromJson(Map<String, dynamic> json) {
     address =
@@ -43,6 +51,10 @@ class Location {
     name = json['name'];
     posBackgroundUrl = json['pos_background_url'];
     status = json['status'];
+    twitterUsername = json['twitter_username'];
+    instagramUsername = json['instagram_username'];
+    facebookUrl = json['facebook_url'];
+    phoneNumber = json['phone_number'];
   }
 
   Map<String, dynamic> toJson() {
@@ -62,6 +74,11 @@ class Location {
     data['name'] = this.name;
     data['pos_background_url'] = this.posBackgroundUrl;
     data['status'] = this.status;
+    data['twitter_username'] = this.twitterUsername;
+    data['instagram_username'] = this.instagramUsername;
+    data['facebook_url'] = this.facebookUrl;
+    data['phone_number'] = this.phoneNumber;
+
     return data;
   }
 }

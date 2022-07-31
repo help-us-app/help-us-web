@@ -4,6 +4,7 @@ import 'package:help_us_web/objects/user.dart';
 import 'package:help_us_web/pages/campaigns/campaigns.dart';
 import 'package:help_us_web/pages/items/items.dart';
 import 'package:help_us_web/widgets/custom_scroll_body.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../objects/campaign.dart';
 import '../../objects/location.dart';
@@ -80,14 +81,51 @@ class _DashboardState extends State<Dashboard> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(FontAwesome.instagram, size: 30),
-                        SizedBox(width: 10),
-                        Icon(FontAwesome.twitter, size: 30),
-                        SizedBox(width: 10),
-                        Icon(FontAwesome.facebook, size: 30),
-                        SizedBox(width: 10),
-                        Icon(FontAwesome.phone_square, size: 30),
+                      children: [
+                        if (widget.location.instagramUsername.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: IconButton(
+                              onPressed: () {
+                                launchUrlString(
+                                    'https://instagram.com/${widget.location.instagramUsername}');
+                              },
+                              icon: const Icon(FontAwesome.instagram, size: 30),
+                            ),
+                          ),
+                        if (widget.location.facebookUrl.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: IconButton(
+                              onPressed: () {
+                                launchUrlString(widget.location.facebookUrl);
+                              },
+                              icon: const Icon(FontAwesome.facebook, size: 30),
+                            ),
+                          ),
+                        if (widget.location.twitterUsername.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: IconButton(
+                              onPressed: () {
+                                launchUrlString(
+                                    'https://twitter.com/${widget.location.twitterUsername}');
+                              },
+                              icon: const Icon(FontAwesome.twitter, size: 30),
+                            ),
+                          ),
+                        if (widget.location.phoneNumber.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: IconButton(
+                              onPressed: () {
+                                launchUrlString(
+                                    'tel:${widget.location.phoneNumber}');
+                              },
+                              icon:
+                                  const Icon(FontAwesome.phone_square, size: 30),
+                            ),
+                          ),
                       ],
                     ),
                   ),
@@ -111,7 +149,7 @@ class _DashboardState extends State<Dashboard> {
                 const Spacer(),
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).push(createRoute( Campaigns(
+                    Navigator.of(context).push(createRoute(Campaigns(
                       campaigns: widget.campaigns,
                       user: widget.user,
                     )));
