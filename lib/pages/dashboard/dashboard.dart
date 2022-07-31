@@ -84,6 +84,8 @@ class _DashboardState extends State<Dashboard> {
                         Icon(FontAwesome.twitter, size: 30),
                         SizedBox(width: 10),
                         Icon(FontAwesome.facebook, size: 30),
+                        SizedBox(width: 10),
+                        Icon(FontAwesome.phone_square, size: 30),
                       ],
                     ),
                   ),
