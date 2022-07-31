@@ -13,10 +13,7 @@ class PhotoView extends StatelessWidget {
           body: CustomScrollBody(
         isLoading: false,
         slivers: [
-          const SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            sliver: SliverAppBar(),
-          ),
+          const SliverAppBar(),
           SliverFillRemaining(
               child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
