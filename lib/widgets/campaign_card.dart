@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:help_us_web/utils/transition.dart';
+import 'package:help_us_web/widgets/photo_view.dart';
 
 import '../repositories/repository.dart';
 import '../utils/app_colors.dart';
@@ -22,6 +24,7 @@ class CampaignCard extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Card(
+        clipBehavior: Clip.antiAlias,
         borderOnForeground: true,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(
@@ -39,11 +42,20 @@ class CampaignCard extends StatelessWidget {
           child: Row(
             children: [
               if (image != null)
-                Image.network(
-                  "${Repository.directusUrl}assets/$image",
-                  fit: BoxFit.cover,
-                  height: 80,
-                  width: 80,
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(createRoute(PhotoView(
+                        imageUrl: '${Repository.directusUrl}assets/$image')));
+                  },
+                  child: Hero(
+                    tag: "${Repository.directusUrl}assets/$image",
+                    child: Image.network(
+                      "${Repository.directusUrl}assets/$image",
+                      fit: BoxFit.cover,
+                      height: 80,
+                      width: 80,
+                    ),
+                  ),
                 ),
               const SizedBox(
                 width: 10,
@@ -104,13 +116,17 @@ class CampaignCard extends StatelessWidget {
                                 ),
                               ),
                             ))),
-                    Text(
-                      description,
-                      textAlign: TextAlign.start,
-                      style: Theme.of(context)
-                          .textTheme
-                          .caption
-                          .copyWith(color: Colors.grey),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.55,
+
+                      child: Text(
+                        description,
+                        textAlign: TextAlign.start,
+                        style: Theme.of(context)
+                            .textTheme
+                            .caption
+                            .copyWith(color: Colors.grey),
+                      ),
                     ),
                   ],
                 ),
