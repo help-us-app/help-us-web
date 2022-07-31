@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:help_us_web/objects/user.dart';
+import 'package:help_us_web/pages/campaigns/campaigns.dart';
 import 'package:help_us_web/pages/items/items.dart';
 import 'package:help_us_web/widgets/custom_scroll_body.dart';
 
@@ -31,6 +32,7 @@ class _DashboardState extends State<Dashboard> {
         const SliverPadding(
           padding: EdgeInsets.symmetric(horizontal: 20),
           sliver: SliverAppBar(
+            backgroundColor: Colors.transparent,
             leading: SizedBox.shrink(),
             title: HelpUsLogo(
               hasForChrome: true,
@@ -107,11 +109,19 @@ class _DashboardState extends State<Dashboard> {
                       .copyWith(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 const Spacer(),
-                Text("SEE ALL",
-                    style: Theme.of(context).textTheme.caption.copyWith(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 2)),
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(createRoute( Campaigns(
+                      campaigns: widget.campaigns,
+                      user: widget.user,
+                    )));
+                  },
+                  child: Text("SEE ALL",
+                      style: Theme.of(context).textTheme.caption.copyWith(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 2)),
+                ),
               ],
             ),
           ),

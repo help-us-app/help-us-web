@@ -47,14 +47,11 @@ class CampaignCard extends StatelessWidget {
                     Navigator.of(context).push(createRoute(PhotoView(
                         imageUrl: '${Repository.directusUrl}assets/$image')));
                   },
-                  child: Hero(
-                    tag: "${Repository.directusUrl}assets/$image",
-                    child: Image.network(
-                      "${Repository.directusUrl}assets/$image",
-                      fit: BoxFit.cover,
-                      height: 80,
-                      width: 80,
-                    ),
+                  child: Image.network(
+                    "${Repository.directusUrl}assets/$image",
+                    fit: BoxFit.cover,
+                    height: 80,
+                    width: 80,
                   ),
                 ),
               const SizedBox(
@@ -118,7 +115,6 @@ class CampaignCard extends StatelessWidget {
                             ))),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.55,
-
                       child: Text(
                         description,
                         textAlign: TextAlign.start,
