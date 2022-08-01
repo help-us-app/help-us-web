@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:help_us_web/pages/dashboard/dashboard.dart';
+import 'package:help_us_web/pages/home_page.dart';
 import 'package:help_us_web/pages/wrapper/wrapper_bloc.dart';
 
 import '../loading_page.dart';
@@ -46,9 +47,7 @@ class WrapperState extends State<Wrapper> {
           }
 
           if (snapshot.hasError) {
-            child = Container(
-              color: Colors.red,
-            );
+            child = const HomePage();
           }
 
           return child;
