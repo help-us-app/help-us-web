@@ -33,6 +33,11 @@ class _ItemsState extends State<Items> {
   }
 
   @override
+  void dispose() {
+    bloc.dispose();
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: StreamBuilder<ItemsObjectState>(

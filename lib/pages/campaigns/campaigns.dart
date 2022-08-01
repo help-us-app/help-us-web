@@ -27,6 +27,12 @@ class _CampaignsState extends State<Campaigns> {
   }
 
   @override
+  void dispose() {
+    bloc.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: StreamBuilder<CampaignsObjectState>(
