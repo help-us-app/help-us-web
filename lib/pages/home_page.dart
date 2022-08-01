@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
         isLoading: false,
         slivers: [
           SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             sliver: SliverFillRemaining(
               hasScrollBody: false,
               child: Center(

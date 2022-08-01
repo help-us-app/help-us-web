@@ -192,6 +192,11 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
         ),
+        const SliverToBoxAdapter(
+          child: SizedBox(
+            height: 30,
+          ),
+        )
       ],
     ));
   }
