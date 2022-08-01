@@ -16,6 +16,8 @@ class CustomScrollBody extends StatelessWidget {
       children: [
         const GradientBackground(),
         CustomScrollView(
+          scrollBehavior:
+              ScrollConfiguration.of(context).copyWith(scrollbars: false),
           physics: const BouncingScrollPhysics(
             parent: AlwaysScrollableScrollPhysics(),
           ),
