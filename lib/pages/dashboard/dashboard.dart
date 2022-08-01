@@ -122,8 +122,8 @@ class _DashboardState extends State<Dashboard> {
                                 launchUrlString(
                                     'tel:${widget.location.phoneNumber}');
                               },
-                              icon:
-                                  const Icon(FontAwesome.phone_square, size: 30),
+                              icon: const Icon(FontAwesome.phone_square,
+                                  size: 30),
                             ),
                           ),
                       ],
@@ -172,7 +172,9 @@ class _DashboardState extends State<Dashboard> {
                 return CampaignCard(
                   id: widget.campaigns[index].id.toString(),
                   title: widget.campaigns[index].name,
-                  image: widget.campaigns[index].image,
+                  image: widget.campaigns[index].isCompleted
+                      ? widget.campaigns[index].completed
+                      : widget.campaigns[index].image,
                   description: widget.campaigns[index].description,
                   onTap: () {
                     if (mounted) {
