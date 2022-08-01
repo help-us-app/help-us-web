@@ -26,6 +26,7 @@ class HomePage extends StatelessWidget {
                       fontSize: 50,
                     ),
                     RichText(
+                      textAlign: TextAlign.center,
                       text: TextSpan(
                         text: 'Please access through a ',
                         style: Theme.of(context)
