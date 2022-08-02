@@ -30,6 +30,7 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   DashboardBloc bloc = DashboardBloc();
+  Widget notice;
 
   @override
   void dispose() {
@@ -38,12 +39,18 @@ class _DashboardState extends State<Dashboard> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    Widget notice = NoticeDisplay.display(
+  void initState() {
+    super.initState();
+    notice = NoticeDisplay.display(
         "${Constant.webApp}${widget.location.id}/${widget.user.id}", context);
 
-    checkEmail();
+    if (notice == null) {
+      checkEmail();
+    }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return notice ??
         Scaffold(
             body: CustomScrollBody(
