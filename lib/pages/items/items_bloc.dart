@@ -2,12 +2,15 @@ import 'package:rxdart/rxdart.dart';
 
 import '../../objects/item.dart';
 import '../../repositories/repository.dart';
+import '../../utils/db.dart';
 
 class ItemsBloc {
   final BehaviorSubject items = BehaviorSubject.seeded([]);
   final BehaviorSubject selectedItems = BehaviorSubject<List<Item>>();
   final BehaviorSubject<bool> isLoading = BehaviorSubject.seeded(false);
   Stream<ItemsObjectState> stream;
+  DB db = DB();
+
   ItemsBloc(String campaignId) {
     stream = CombineLatestStream(
         [items, isLoading, selectedItems],
@@ -50,12 +53,11 @@ class ItemsBloc {
     this.isLoading.add(isLoading);
   }
 
-  purchaseItems(String userId, String locationId, String buyerEmail,
-      String paymentNote) async {
+  purchaseItems(String userId, String locationId) async {
     updateIsLoading(true);
     List<Item> selectedItems = this.selectedItems.value;
     String url = await Repository.createPayment(
-        userId, locationId, buyerEmail, selectedItems);
+        userId, locationId, db.getUser(), selectedItems);
     updateIsLoading(false);
     return url;
   }

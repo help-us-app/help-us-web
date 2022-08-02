@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import '../utils/app_colors.dart';
 import '../utils/price_formatter.dart';
 
-
 class ItemRow extends StatelessWidget {
   final String title, price, image;
   final VoidCallback onTap;
   final bool isPurchased;
+  final String boughtBy;
   final bool selected;
   final String hero;
 
@@ -19,7 +19,8 @@ class ItemRow extends StatelessWidget {
       this.price,
       this.image,
       this.isPurchased,
-      this.selected})
+      this.selected,
+      this.boughtBy})
       : super(key: key);
 
   @override
@@ -70,6 +71,16 @@ class ItemRow extends StatelessWidget {
                         style: theme.textTheme.headline6,
                       ),
                     ),
+                    if (boughtBy != null)
+                      Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          child: Text(
+                            boughtBy,
+                            style: theme.textTheme.subtitle1.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey[500],
+                                fontSize: 12),
+                          )),
                     if (isPurchased != null)
                       Padding(
                           padding: const EdgeInsets.symmetric(vertical: 5),

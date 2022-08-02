@@ -68,6 +68,7 @@ class _ItemsState extends State<Items> {
                                     title: state.data.items[index].title,
                                     price: state.data.items[index].price,
                                     image: state.data.items[index].productImage,
+                                    boughtBy: state.data.items[index].boughtBy,
                                     isPurchased:
                                         state.data.items[index].purchased,
                                     onTap: () async {
@@ -112,7 +113,7 @@ class _ItemsState extends State<Items> {
           label: 'Confirm Items',
           onPressed: () async {
             String url = await bloc.purchaseItems(widget.userId,
-                widget.locationId, "carlduncanja@gmail.com", "Test Note");
+                widget.locationId);
             _showUrlSnackBar(url);
           },
         ),

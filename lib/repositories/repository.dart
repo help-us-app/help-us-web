@@ -73,6 +73,7 @@ class Repository {
           productImage: item["thumbnail"],
           price: item["price"],
           purchased: item["purchased"],
+          boughtBy: item["bought_by"],
         ));
       }
       log("getItems");

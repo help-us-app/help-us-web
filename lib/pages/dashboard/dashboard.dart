@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:help_us_web/objects/user.dart';
 import 'package:help_us_web/pages/campaigns/campaigns.dart';
+import 'package:help_us_web/pages/dashboard/dashboard_bloc.dart';
 import 'package:help_us_web/pages/items/items.dart';
 import 'package:help_us_web/utils/notice_display.dart';
 import 'package:help_us_web/widgets/custom_scroll_body.dart';
@@ -13,6 +15,7 @@ import '../../utils/const.dart';
 import '../../utils/transition.dart';
 import '../../widgets/campaign_card.dart';
 import '../../widgets/help_us_logo.dart';
+import '../../widgets/help_us_text_field.dart';
 
 class Dashboard extends StatefulWidget {
   final Location location;
@@ -26,11 +29,21 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  DashboardBloc bloc = DashboardBloc();
+
+  @override
+  void dispose() {
+    bloc.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     Widget notice = NoticeDisplay.display(
         "${Constant.webApp}${widget.location.id}/${widget.user.id}", context);
+
+    checkEmail();
+
     return notice ??
         Scaffold(
             body: CustomScrollBody(
@@ -211,5 +224,42 @@ class _DashboardState extends State<Dashboard> {
             )
           ],
         ));
+  }
+
+  checkEmail() {
+    if (bloc.db.getUser() == null) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        showDialog(
+            barrierDismissible: false,
+            useRootNavigator: true,
+            context: context,
+            builder: (BuildContext context) => SimpleDialog(
+                  title: const Text(
+                    "Enter your Email Address",
+                    textAlign: TextAlign.center,
+                  ),
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 20, right: 20, bottom: 24),
+                      child: HelpUsTextField(
+                          value: "Email Address",
+                          controller: bloc.email,
+                          obscure: false,
+                          enabled: true),
+                    ),
+                    SimpleDialogOption(
+                      onPressed: () {
+                        bloc.saveUser(context);
+                      },
+                      child: const Text(
+                        'Confirm',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                ));
+      });
+    }
   }
 }

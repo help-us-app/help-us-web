@@ -13,6 +13,7 @@ class Item {
     this.productLink,
     this.productImage,
     this.purchased,
+    this.boughtBy
   });
   String id;
   String title;
@@ -21,6 +22,7 @@ class Item {
   String productLink;
   String productImage;
   bool purchased;
+  String boughtBy;
 
   factory Item.fromJson(Map<String, dynamic> json) => Item(
         id: json["id"],
@@ -30,6 +32,7 @@ class Item {
         productLink: json["product_link"],
         productImage: json["product_image"],
         purchased: json["purchased"],
+        boughtBy: json["bought_by"],
       );
 
   Map<String, dynamic> toJson() => {

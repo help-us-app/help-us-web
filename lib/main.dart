@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:help_us_web/utils/app_themes.dart';
+import 'package:help_us_web/utils/db.dart';
 import 'package:help_us_web/utils/route_generator.dart';
 import 'package:url_strategy/url_strategy.dart';
 
-void main() {
+Future<void> main() async {
+  await DB().init();
   setPathUrlStrategy();
   runApp(const MyApp());
 }
