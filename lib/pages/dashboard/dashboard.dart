@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:help_us_web/objects/user.dart';
@@ -31,6 +30,7 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   DashboardBloc bloc = DashboardBloc();
   Widget notice;
+  dynamic dialog;
 
   @override
   void dispose() {
@@ -39,18 +39,12 @@ class _DashboardState extends State<Dashboard> {
   }
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context) {
     notice = NoticeDisplay.display(
         "${Constant.webApp}${widget.location.id}/${widget.user.id}", context);
-
     if (notice == null) {
       checkEmail();
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return notice ??
         Scaffold(
             body: CustomScrollBody(
@@ -235,8 +229,11 @@ class _DashboardState extends State<Dashboard> {
 
   checkEmail() {
     if (bloc.db.getUser() == null) {
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        showDialog(
+      WidgetsBinding.instance.addPostFrameCallback((timestamp) {
+        if (dialog != null) {
+          return;
+        }
+        dialog = showDialog(
             barrierDismissible: false,
             useRootNavigator: true,
             context: context,
