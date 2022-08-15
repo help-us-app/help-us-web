@@ -40,6 +40,7 @@ class HelpUsTextField extends StatelessWidget {
         textInputAction: TextInputAction.done,
         enabled: enabled,
         obscureText: obscure,
+        textAlign: TextAlign.center,
         maxLength: maxLength,
         decoration: InputDecoration(
             isCollapsed: false,
@@ -48,7 +49,9 @@ class HelpUsTextField extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide.none,
             ),
-            labelText: value,
+            label: Center(
+              child: Text(value),
+            ),
             floatingLabelBehavior: FloatingLabelBehavior.never,
             fillColor: Theme.of(context).cardColor),
       ),
