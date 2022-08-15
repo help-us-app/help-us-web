@@ -11,7 +11,7 @@ class Repository {
   static String directusUrl = "https://help-us.directus.app/";
   static String directusToken = "VjL2EY9ju8efp37w8ZUobcrcn99vL4ce";
   static String herokuUrl = "https://api.help-us-app.com/";
-  static String herokuToken = "b57fbb6c-7b71-445e-8bd9-908b4251a595";
+  static String herokuToken = "umM1rU0n7jTetbPG0XTlRuYAjxnukT7Y";
 
   static getUserById(String userId) async {
     try {
