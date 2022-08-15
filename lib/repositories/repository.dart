@@ -11,7 +11,7 @@ class Repository {
   static String directusUrl = "https://help-us.directus.app/";
   static String directusToken = "VjL2EY9ju8efp37w8ZUobcrcn99vL4ce";
   static String herokuUrl = "https://help-us-api.herokuapp.com/";
-  static String herokuToken = "";
+  static String herokuToken = "b57fbb6c-7b71-445e-8bd9-908b4251a595";
 
   static getUserById(String userId) async {
     try {
@@ -86,8 +86,10 @@ class Repository {
 
   static getLocationById(String locationId, String userId) async {
     try {
-      Response response =
-          await dio.get("${herokuUrl}location/$locationId?user_id=$userId");
+      Response response = await dio.get(
+        "${herokuUrl}location/$locationId?user_id=$userId",
+        options: Options(headers: {"Authorization": "Bearer $herokuToken"}),
+      );
       log("getLocationById");
       return Location.fromJson(response.data['location']);
     } catch (e) {
@@ -107,6 +109,7 @@ class Repository {
           "buyer_email": buyerEmail,
           "line_items": lineItems.map((item) => item.toJson()).toList(),
         },
+        options: Options(headers: {"Authorization": "Bearer $herokuToken"}),
       );
       log("createPayment");
       return response.data['payment_link']['url'];
