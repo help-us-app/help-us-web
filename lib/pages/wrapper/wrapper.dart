@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:help_us_web/pages/dashboard/dashboard.dart';
 import 'package:help_us_web/pages/home_page.dart';
 import 'package:help_us_web/pages/wrapper/wrapper_bloc.dart';
+import 'package:help_us_web/utils/transition.dart';
 
 import '../loading_page.dart';
 
@@ -39,11 +41,18 @@ class WrapperState extends State<Wrapper> {
 
           if (snapshot.hasData) {
             WrapperObjectState state = snapshot.data;
-            child = Dashboard(
-              location: state.location,
-              user: state.user,
-              campaigns: state.campaigns,
-            );
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              while (Navigator.canPop(context)) {
+                Navigator.pop(context);
+              }
+              Navigator.pushReplacement(
+                  context,
+                  createRoute(Dashboard(
+                    location: state.location,
+                    user: state.user,
+                    campaigns: state.campaigns,
+                  )));
+            });
           }
 
           if (snapshot.hasError) {
