@@ -26,20 +26,6 @@ class Repository {
     }
   }
 
-  static Future<Map<String, dynamic>> getRemoteConfigurations() async {
-    try {
-      Response response = await dio.get(
-          "${directusUrl}items/remote_configurations",
-          options:
-              Options(headers: {"Authorization": "Bearer $directusToken"}));
-      log("getRemoteConfigurations");
-      return response.data["data"];
-    } catch (e) {
-      log(e.toString());
-      return null;
-    }
-  }
-
   static getCampaigns(String locationId) async {
     try {
       Response response = await dio.get(
