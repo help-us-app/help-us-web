@@ -69,6 +69,7 @@ class _DashboardState extends State<Dashboard> {
                   widget.location.logoUrl,
                   height: 250,
                   width: 250,
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
