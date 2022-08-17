@@ -29,7 +29,7 @@ class Repository {
   static getCampaigns(String locationId) async {
     try {
       Response response = await dio.get(
-        "${directusUrl}items/Campaign?filter[location_id][_eq]=$locationId",
+        "${directusUrl}items/Campaign?filter[location_id][_eq]=$locationId&sort=-date_created",
         options: Options(headers: {"Authorization": "Bearer $directusToken"}),
       );
       List<Campaign> campaigns = [];
