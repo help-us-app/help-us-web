@@ -29,12 +29,9 @@ class HomePage extends StatelessWidget {
                       textAlign: TextAlign.center,
                       text: TextSpan(
                         text: 'Please access through a ',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText1
-                            .copyWith(
-                          fontSize: 20,
-                        ),
+                        style: Theme.of(context).textTheme.bodyText1.copyWith(
+                              fontSize: 20,
+                            ),
                         children: [
                           TextSpan(
                             text: 'participating business',
@@ -42,9 +39,9 @@ class HomePage extends StatelessWidget {
                                 .textTheme
                                 .bodyText1
                                 .copyWith(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.primary),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.primary),
                           ),
                         ],
                       ),
@@ -55,7 +52,6 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
-
         ],
       ),
     );

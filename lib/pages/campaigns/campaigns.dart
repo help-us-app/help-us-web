@@ -79,7 +79,7 @@ class _CampaignsState extends State<Campaigns> {
                                       }
                                     },
                                     isCompleted:
-                                    state.data.campaigns[index].isCompleted,
+                                        state.data.campaigns[index].isCompleted,
                                   );
                                 },
                                 childCount: state.data.campaigns.length,

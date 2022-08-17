@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:help_us_web/utils/db.dart';
 
@@ -21,6 +20,4 @@ class DashboardBloc {
   }
 }
 
-class DashboardState {
-
-}
+class DashboardState {}

@@ -8,11 +8,12 @@ class CampaignsBloc {
   Stream<CampaignsObjectState> stream;
 
   CampaignsBloc(List<Campaign> campaigns) {
-    stream = CombineLatestStream([this.campaigns, isLoading],
-        (values) => CampaignsObjectState(campaigns: values[0], isLoading: values[1]));
+    stream = CombineLatestStream(
+        [this.campaigns, isLoading],
+        (values) =>
+            CampaignsObjectState(campaigns: values[0], isLoading: values[1]));
     updateCampaigns(campaigns);
     updateIsLoading(false);
-
   }
 
   void dispose() {

@@ -37,6 +37,7 @@ class _ItemsState extends State<Items> {
     bloc.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,8 +113,8 @@ class _ItemsState extends State<Items> {
         action: SnackBarAction(
           label: 'Confirm Items',
           onPressed: () async {
-            String url = await bloc.purchaseItems(widget.userId,
-                widget.locationId);
+            String url =
+                await bloc.purchaseItems(widget.userId, widget.locationId);
             _showUrlSnackBar(url);
           },
         ),
