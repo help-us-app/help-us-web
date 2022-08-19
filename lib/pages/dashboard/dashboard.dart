@@ -67,8 +67,8 @@ class _DashboardState extends State<Dashboard> {
               sliver: SliverToBoxAdapter(
                 child: Image.network(
                   widget.location.logoUrl,
-                  height: 250,
-                  width: 250,
+                  height: 300,
+                  width: 300,
                   fit: BoxFit.cover,
                 ),
               ),
