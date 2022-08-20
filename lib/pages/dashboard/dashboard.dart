@@ -54,6 +54,7 @@ class _DashboardState extends State<Dashboard> {
               padding: EdgeInsets.symmetric(horizontal: 20),
               sliver: SliverAppBar(
                 backgroundColor: Colors.transparent,
+                centerTitle: true,
                 title: HelpUsLogo(
                   hasForChrome: true,
                   fontSize: 30,
