@@ -40,70 +40,76 @@ class _ItemsState extends State<Items> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: StreamBuilder<ItemsObjectState>(
-            stream: bloc.stream,
-            builder: (context, state) {
-              return CustomScrollBody(
-                  isLoading: !state.hasData || state.data.isLoading,
-                  slivers: state.hasData
-                      ? [
-                          SliverAppBar(
-                            floating: true,
-                            snap: true,
-                            backgroundColor: Colors.transparent,
-                            elevation: 0,
-                            flexibleSpace: FlexibleSpaceBar(
-                              title: Text(widget.campaignName),
-                              centerTitle: true,
-                            ),
-                          ),
-                          SliverPadding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            sliver: SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                                (context, index) {
-                                  bool isSelected = state.data.selectedItems
-                                      .contains(state.data.items[index]);
-                                  return ItemRow(
-                                    title: state.data.items[index].title,
-                                    price: state.data.items[index].price,
-                                    image: state.data.items[index].productImage,
-                                    boughtBy: state.data.items[index].boughtBy,
-                                    isPurchased:
-                                        state.data.items[index].purchased,
-                                    onTap: () async {
-                                      if (state.data.items[index].purchased) {
-                                        return;
-                                      }
-                                      if (isSelected) {
-                                        await bloc.removeFromSelectedItems(
-                                            state.data.items[index]);
-                                      } else {
-                                        await bloc.addToSelectedItems(
-                                            state.data.items[index]);
-                                      }
-                                      _showSnackBar(
-                                          state.data.selectedItems.length);
-                                    },
-                                    selected: isSelected,
-                                  );
-                                },
-                                childCount: state.data.items.length,
+    return ScaffoldMessenger(
+      child: Scaffold(
+          body: StreamBuilder<ItemsObjectState>(
+              stream: bloc.stream,
+              builder: (context, state) {
+                return CustomScrollBody(
+                    isLoading: !state.hasData || state.data.isLoading,
+                    slivers: state.hasData
+                        ? [
+                            SliverAppBar(
+                              floating: true,
+                              snap: true,
+                              backgroundColor: Colors.transparent,
+                              elevation: 0,
+                              flexibleSpace: FlexibleSpaceBar(
+                                title: Text(widget.campaignName),
+                                centerTitle: true,
                               ),
                             ),
-                          ),
-                          const SliverToBoxAdapter(
-                            child: SizedBox(
-                              height: 30,
+                            SliverPadding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              sliver: SliverList(
+                                delegate: SliverChildBuilderDelegate(
+                                  (context, index) {
+                                    bool isSelected = state.data.selectedItems
+                                        .contains(state.data.items[index]);
+                                    return ItemRow(
+                                      title: state.data.items[index].title,
+                                      price: state.data.items[index].price,
+                                      image:
+                                          state.data.items[index].productImage,
+                                      boughtBy:
+                                          state.data.items[index].boughtBy,
+                                      isPurchased:
+                                          state.data.items[index].purchased,
+                                      onTap: () async {
+                                        if (state.data.items[index].purchased) {
+                                          return;
+                                        }
+                                        if (isSelected) {
+                                          await bloc.removeFromSelectedItems(
+                                              state.data.items[index]);
+                                        } else {
+                                          await bloc.addToSelectedItems(
+                                              state.data.items[index]);
+                                        }
+                                        _showSnackBar(
+                                            state.data.selectedItems.length,
+                                            context);
+                                      },
+                                      selected: isSelected,
+                                    );
+                                  },
+                                  childCount: state.data.items.length,
+                                ),
+                              ),
                             ),
-                          )
-                        ]
-                      : []);
-            }));
+                            const SliverToBoxAdapter(
+                              child: SizedBox(
+                                height: 30,
+                              ),
+                            )
+                          ]
+                        : []);
+              })),
+    );
   }
 
-  void _showSnackBar(int num) {
+  void _showSnackBar(int num, BuildContext context) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     if (num != 0) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -115,7 +121,9 @@ class _ItemsState extends State<Items> {
           onPressed: () async {
             String url =
                 await bloc.purchaseItems(widget.userId, widget.locationId);
-            _showUrlSnackBar(url);
+            if (mounted) {
+              _showUrlSnackBar(url, context);
+            }
           },
         ),
         duration: const Duration(days: 365),
@@ -124,7 +132,7 @@ class _ItemsState extends State<Items> {
     }
   }
 
-  void _showUrlSnackBar(String url) {
+  void _showUrlSnackBar(String url, BuildContext context) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: const Text(
